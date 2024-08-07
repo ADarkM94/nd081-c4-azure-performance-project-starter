@@ -27,7 +27,7 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 stats = stats_module.stats
 view_manager = stats.view_manager
 
-applicationInsightsConnectionString = 'InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=6f1a5d57-243f-4248-a43d-7e0ff83bce3d'
+applicationInsightsConnectionString = 'InstrumentationKey=3bcb1480-2b75-4e4f-a9ae-78f906043c5c;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=c57d0a42-83e2-403b-bc4f-f5beb02112f5'
 
 # Logging
 # TODO: Setup logger
