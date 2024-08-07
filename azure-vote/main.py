@@ -31,8 +31,8 @@ applicationInsightsConnectionString = 'InstrumentationKey=74657eac-a41f-4ab1-91d
 
 # Logging
 # TODO: Setup logger
-config_integration.trace_integrations(['logging'])
-config_integration.trace_integrations(['requests'])
+# config_integration.trace_integrations(['logging'])
+# config_integration.trace_integrations(['requests'])
 # Standard Logging
 logger = logging.getLogger(__name__)
 handler = AzureLogHandler(
