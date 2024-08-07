@@ -27,6 +27,8 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 stats = stats_module.stats
 view_manager = stats.view_manager
 
+applicationInsightsConnectionString = 'InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=6f1a5d57-243f-4248-a43d-7e0ff83bce3d'
+
 # Logging
 # TODO: Setup logger
 config_integration.trace_integrations(['logging'])
@@ -34,12 +36,12 @@ config_integration.trace_integrations(['requests'])
 # Standard Logging
 logger = logging.getLogger(__name__)
 handler = AzureLogHandler(
-    connection_string='InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2')
+    connection_string=applicationInsightsConnectionString)
 handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
 logger.addHandler(handler)
 # Logging custom Events
 logger.addHandler(AzureEventHandler(
-    connection_string='InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2'))
+    connection_string=applicationInsightsConnectionString))
 # Set the logging level
 logger.setLevel(logging.INFO)
 
@@ -47,14 +49,14 @@ logger.setLevel(logging.INFO)
 # TODO: Setup exporter
 exporter = metrics_exporter.new_metrics_exporter(
     enable_standard_metrics=True,
-    connection_string='InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2')
+    connection_string=applicationInsightsConnectionString)
 view_manager.register_exporter(exporter)
 
 # Tracing
 # TODO: Setup tracer
 tracer = Tracer(
     exporter=AzureExporter(
-        connection_string='InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2'),
+        connection_string=applicationInsightsConnectionString),
     sampler=ProbabilitySampler(1.0),
 )
 
@@ -65,7 +67,7 @@ app = Flask(__name__)
 middleware = FlaskMiddleware(
     app,
     exporter=AzureExporter(
-        connection_string="InstrumentationKey=74657eac-a41f-4ab1-91d1-260924598fb2"),
+        connection_string=applicationInsightsConnectionString),
     sampler=ProbabilitySampler(rate=1.0)
 )
 
