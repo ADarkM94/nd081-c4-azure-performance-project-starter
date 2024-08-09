@@ -27,17 +27,18 @@ from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 stats = stats_module.stats
 view_manager = stats.view_manager
 
-applicationInsightsConnectionString = 'InstrumentationKey=3bcb1480-2b75-4e4f-a9ae-78f906043c5c;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=c57d0a42-83e2-403b-bc4f-f5beb02112f5'
+# applicationInsightsConnectionString = 'InstrumentationKey=3bcb1480-2b75-4e4f-a9ae-78f906043c5c;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=c57d0a42-83e2-403b-bc4f-f5beb02112f5'
+applicationInsightsConnectionString = 'InstrumentationKey=179866f4-e097-4fb7-a57c-af82889701de'
 
 # Logging
 # TODO: Setup logger
-# config_integration.trace_integrations(['logging'])
-# config_integration.trace_integrations(['requests'])
+config_integration.trace_integrations(['logging'])
+config_integration.trace_integrations(['requests'])
 # Standard Logging
 logger = logging.getLogger(__name__)
 handler = AzureLogHandler(
     connection_string=applicationInsightsConnectionString)
-handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
+# handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
 logger.addHandler(handler)
 # Logging custom Events
 logger.addHandler(AzureEventHandler(
@@ -111,10 +112,10 @@ def index():
         # Get current values
         vote1 = r.get(button1).decode('utf-8')
         # TODO: use tracer object to trace cat vote
-        # tracer.span(name="Cats Vote: {}".format(vote1))
+        tracer.span(name="Cats Vote: {}".format(vote1))
         vote2 = r.get(button2).decode('utf-8')
         # TODO: use tracer object to trace dog vote
-        # tracer.span(name="Dogs Vote: {}".format(vote2))
+        tracer.span(name="Dogs Vote: {}".format(vote2))
 
         # Return index with values
         return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
@@ -143,9 +144,7 @@ def index():
             # Insert vote result into DB
             vote = request.form['vote']
             r.incr(vote, 1)
-            eventName = "{} Vote".format(vote)
-            # with tracer.span(name=eventName) as span:
-            #     print(eventName)
+            tracer.span("{} Vote".format(vote))
 
             # Get current values
             vote1 = r.get(button1).decode('utf-8')
