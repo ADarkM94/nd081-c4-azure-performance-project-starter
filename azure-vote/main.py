@@ -28,7 +28,7 @@ stats = stats_module.stats
 view_manager = stats.view_manager
 
 # applicationInsightsConnectionString = 'InstrumentationKey=3bcb1480-2b75-4e4f-a9ae-78f906043c5c;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=c57d0a42-83e2-403b-bc4f-f5beb02112f5'
-applicationInsightsConnectionString = 'InstrumentationKey=179866f4-e097-4fb7-a57c-af82889701de'
+applicationInsightsConnectionString = 'InstrumentationKey=59fd2514-8351-4f46-a2da-e331ece12673'
 
 # Logging
 # TODO: Setup logger
